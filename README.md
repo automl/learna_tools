@@ -1,28 +1,32 @@
 # LEARNA-tools
-Generative RNA Design with Automated Reinforcement Learning
+Generative RNA Design with Automated Reinforcement Learning.
 
-`LEARNA-tools` is a Python package that provides the commandline interface of
+`learna_tools` is a Python package that provides a commandline interface for
 LEARNA and libLEARNA. The package covers the source code of the following publications
 
 - [Learning to Design RNA](https://openreview.net/pdf?id=ByfyHh05tQ)
 - [Partial RNA Design](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf)
 
 ---
+## Webservice (coming soon)
+For convenience, we provide a [webserver](https://learna.informatik.uni-freiburg.de). We rpovide interfaces to run libLEARNA and the LEARNA algortihms LEARNA, Meta-LEARNA, and Meta-LEARNA-Adapt.
+
+
 ## Installation
 
 ---
 ### Requirements
 
-`LEARNA-tools` requires
+`learna_tools` requires
 
 - Python 3.6
 - RNAfold from the ViennaRNA package
 
-However, we provide a `conda` environment for a more convenient installation of `LEARNA-tools`.
+However, we provide a `conda` environment for a more convenient installation of `learna_tools`.
 
 ### Install conda environment
 
-To install the current version of `LEARNA-tools` from the github repository, first clone the repo as follows
+To install the current version of `learna_tools` from the github repository, first clone the repo as follows
 
 ```
 git clone https://github.com/Rungetf/learna_tools.git
@@ -48,13 +52,13 @@ conda activate learna_tools
 
 ### Installation from github repository
 
-When your system satisfies all requirements, you can install `LEARNA-tools` via pip, either directly within the `learna_tools` by running
+When your system satisfies all requirements, you can install `learna_tools` via pip, either directly within the `learna_tools` by running
 
 ```
 pip install .
 ```
 
-or from the PyPi package
+or from the PyPi package (coming soon)
 
 ```
 pip install learna_tools
@@ -107,7 +111,18 @@ $ <tool> -h
 
 In the following, we provide some information about the different approaches for RNA design as well as on how to run each individual tool.
 
-### LEARNA
+## libLEARNA
+
+### Program Input
+
+
+### Command Line Options
+
+### Outputs
+
+
+
+## LEARNA
 
 The LEARNA algorithm takes a secondary structure in dot-bracket notation as input to generate a RNA sequence that folds into the desired structure.
 The algorithm updates its policy each time it has generated a new sequence and, thus, gets better and better over time by successively updating its weights based on previous predictions.
@@ -214,23 +229,6 @@ an example call including the diversity loss looks as follows.
 ```
 $ meta-learna-adapt --input_file learna_example_input.in --min_solutions 10000 --timeout 100000 --diversity_loss
 ```
-
-### libLEARNA
-
-libLEARNA is an algorithm that
-
-## Python Interfaces
-
-All our tools can also be run directly using python, or imported via `learna_tools`.
-We will now explain how to run the different tools using python and how to import the tools as modules in your research.
-
-### Run `learna_tools` via Python
-
-
-### Import `learna_tools` into an existing python script
-
-
-
 
 ## Automated Reinforcement Learning
 
