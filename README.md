@@ -8,9 +8,6 @@ LEARNA and libLEARNA. The package covers the source code of the following public
 - [Partial RNA Design](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf)
 
 ---
-## Webservice (coming soon)
-For convenience, we provide a [webserver](https://learna.informatik.uni-freiburg.de). We rpovide interfaces to run libLEARNA and the LEARNA algortihms LEARNA, Meta-LEARNA, and Meta-LEARNA-Adapt.
-
 
 ## Installation
 
@@ -58,11 +55,8 @@ When your system satisfies all requirements, you can install `learna_tools` via 
 pip install .
 ```
 
-or from the PyPi package (coming soon)
+## libLEARNA
 
-```
-pip install learna_tools
-```
 
 ### CM design with libLEARNA
 To run the CM design with libLEARNA, you need to install Infernal:
