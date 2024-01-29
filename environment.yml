@@ -8,5 +8,5 @@ dependencies:
   - varna
   - pip
   - contrafold
-  - intarna
+  - intarna=1.2.5
   - infernal

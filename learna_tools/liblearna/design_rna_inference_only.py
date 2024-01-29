@@ -95,10 +95,10 @@ def _get_episode_finished(timeout,
                 if candidate_from_info not in [s['sequence'] for s in SOLUTIONS]:
                     SOLUTIONS.append({'Id': target_id,
                                       'time': elapsed_time,
-                                      'reward': last_reward,
+                                      'bitscore': last_reward,
                                       'sequence': candidate_from_info,
-                                      'structure': folding,
-                                      'GC-content': gc_content,
+                                      # 'structure': folding,
+                                      # 'GC-content': gc_content,
                                       'length': len(candidate_from_info),
                                       })
                     if pbar is not None:
@@ -120,14 +120,14 @@ def _get_episode_finished(timeout,
         
         elif rri_design:
             
-            if last_reward >= rri_threshold:
+            if (last_reward ** (1/3)) >= rri_threshold:
                 if candidate_from_info not in [s['sequence'] for s in SOLUTIONS]:
                     SOLUTIONS.append({'Id': target_id,
                                       'time': elapsed_time,
-                                      'reward': last_reward,
+                                      'energy': ((-1) * (last_reward ** (1/3))),
                                       'sequence': candidate_from_info,
-                                      'structure': folding,
-                                      'GC-content': gc_content,
+                                      # 'structure': folding,
+                                      # 'GC-content': gc_content,
                                       'length': len(candidate_from_info),
                                       })
                     if pbar is not None:
