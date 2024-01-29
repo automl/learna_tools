@@ -69,7 +69,7 @@ def read_task_description(path):
             tasks.append(task)
 
     data = pd.DataFrame(tasks)
-    print(tasks)
+    # print(tasks)
 
     return data
 

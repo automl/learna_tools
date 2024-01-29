@@ -132,7 +132,7 @@ parser.add_argument("--rri_target", type=str, default='UUUAAAUUAAAAAAUCAUAGAAAAA
 parser.add_argument("--cm_threshold", type=float, default=10.0, help="Seed for task sampling")
 parser.add_argument("--rri_threshold", type=float, default=10.0, help="Seed for task sampling")
 parser.add_argument("--show_all_designs", action="store_true", help="Activate CM design")
-parser.add_argument("--hamming_tolerance", type=int, default=0, help="Seed for task sampling")
+# parser.add_argument("--hamming_tolerance", type=int, default=0, help="Seed for task sampling")
 parser.add_argument("--no_shared_agent", action="store_true", help="Activate CM design")
 parser.add_argument("--plotting_dir", type=str, default=None, help="select target directory for saving plots.")
 parser.add_argument("--results_dir", type=str, default=None, help="select target directory for saving results. Defaults to ./results")
@@ -140,6 +140,8 @@ parser.add_argument("--output_format", type=str, default='pickle', help="select 
 
 
 args = parser.parse_args()
+
+args.hamming_tolerance = 0
 
 network_config = NetworkConfig(
     conv_sizes=args.conv_sizes,  # radius * 2 + 1

@@ -99,7 +99,7 @@ if __name__ == "__main__":
     parser.add_argument("--hamming_tolerance", type=int, default=0, help="Allowed tolerance of Hamming Distance for structure")
 
     parser.add_argument("--num_solutions", type=int, default=1, help="Number of solutions")
-    parser.add_argument("--diversity_loss", action="store_true", help="Use additional loss for diversity")
+    # parser.add_argument("--diversity_loss", action="store_true", help="Use additional loss for diversity")
     parser.add_argument("--plot_structure", action="store_true", help="Plot each structure with varna")
     parser.add_argument("--show_plots", action="store_true", help="Show each plot generated")
     parser.add_argument("--resolution", type=str, default='8.0', help="Resolution for structure plots")
@@ -133,7 +133,7 @@ if __name__ == "__main__":
         mutation_threshold=args.mutation_threshold,
         reward_exponent=args.reward_exponent,
         state_radius=args.state_radius,
-        diversity_loss=args.diversity_loss,
+        diversity_loss=False,  # args.diversity_loss,
     )
 
     if args.target_structure:
