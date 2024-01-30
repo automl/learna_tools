@@ -1,11 +1,11 @@
 # LEARNA-tools
 Generative RNA Design with Automated Reinforcement Learning.
 
-`learna_tools` is a Python package that provides a commandline interface for
-LEARNA and libLEARNA. The package covers the source code of the following publications
+The `learna_tools` package provides commandline interfaces for
+LEARNA, Meta-LEARNA, Meta-LEARNA-Adapt, and libLEARNA as described in the following publications
 
-- [Learning to Design RNA](https://openreview.net/pdf?id=ByfyHh05tQ)
-- [Partial RNA Design](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf)
+- [Learning to Design RNA](https://openreview.net/pdf?id=ByfyHh05tQ) (ICLR'19)
+- [Partial RNA Design](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf) (Under Review @ISMB 2024)
 
 ---
 
@@ -56,6 +56,44 @@ pip install .
 ```
 
 ## libLEARNA
+libLEARNA is the most recent algorithm from the LEARNA family of algorithms. It provides an interface to design RNAs for the partial RNA design paradigm.
+In essence, libLEARNA can design RNAs from sequence and structure motifs under different objectives.
+For more information, take a look into our [bioRxiv paper](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf) that is currently under review at ISMB 2024.
+
+### Input
+libLEARNA requires sequence and structure inputs to be defined in an input file with specific tags.
+Sequence input follow after a `#seq` tag, and structure inputs follow after a `#str` tag.
+A typical input file for inverse RNA folding on the Frog Foot example of the [Eterna100 benchmark](https://github.com/eternagame/eterna100-benchmarking) then looks as follows
+
+```
+>Frog Foot
+#seq NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+#str ..........((((....))))((((....))))((((...))))
+```
+*Note:* We use the letter `N` to denote unconstrained positions.
+
+You can find the example file for the Frog Foot task in the `examples` directory as `if_frog_foot_example_liblearna.input`.
+
+To run libLEARNA on the example, requesting 10 candidates, you can use
+```
+liblearna --input_file examples/if_frog_foot_example_liblearna.input --num_solutions 10
+```
+
+If you would like to design RNAs from sequence and structure motifs, you can use `whitespaces` or `X` ('Xtend here') to mark positions for exploration (denoted $\overset{\ast}{?}$ in out ISMB submission).
+The input file for the design of theophylline riboswitch constructs the for example looks as follows
+
+```
+>theophylline riboswitch example
+#seq AAGUGAUACCAGCAUCGUCUUGAUGCCCUUGGCAGCACUUCA NNNNNN NNNNNNNNNN UUUUUUUU
+#str ........NNN(((((.....)))))...NNN(((((((((( NN.... )))))))))) N.......
+```
+
+### General Usage
+You can run
+```
+liblearna -h
+```
+to see an overview of all options for libLEARNA.
 
 
 ### CM design with libLEARNA
@@ -85,6 +123,21 @@ Then run
 ```
 cmpress Rfam.cm
 ```
+
+To design RNAs that match the Hammrhead ribozyme (Type III) family as described in our recent [paper](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf), you can then for example run
+
+```
+liblearna --input_file examples/cm_design.input --num_solutions 20 --cm_design --cm_path rfam_cms/Rfam.cm --cm_name RF00008 --cm_threshold 10 --min_length 50 --max_length 60
+```
+with the following options
+- `--input_file`: The sequence and structure restrictions on the design space.
+- `--num_solutions`: The number of solutions provided by libLEARNA.
+- `--cm_design`: Flag to design RNAs for a given covariance model.
+- `--cm_path`: The path to the covariance model database.
+- `--cm_name`: The name of the covariance model that we want to design RNAs for.
+- `--cm_threshold`: A bitscore threshold to decide which candidates count as solutions.
+- `--min_length`: The minimum length of the designed candidates.
+- `--max_length`: The maximum length of the designed candidates.
 
 ## Usage
 
