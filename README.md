@@ -102,7 +102,7 @@ The input file for the design of theophylline riboswitch constructs for example 
 #seq AAGUGAUACCAGCAUCGUCUUGAUGCCCUUGGCAGCACUUCA NNNNNN NNNNNNNNNN UUUUUUUU
 #str ........NNN(((((.....)))))...NNN(((((((((( NN.... )))))))))) N.......
 ```
-which is the same as
+which is equal to
 ```
 >theophylline riboswitch example with X
 #seq AAGUGAUACCAGCAUCGUCUUGAUGCCCUUGGCAGCACUUCAXNNNNNNXNNNNNNNNNNXUUUUUUUU
