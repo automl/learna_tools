@@ -26,17 +26,13 @@ def read_task_description(path):
     RNAid
     sequence constraints
     structure constraints
-    ?local gc constraints?  # add later...
     global gc content
-    global energy
 
     Example:
     > Test RNA
     #seq ACGCGGCGCUA AGUUU UUCGCA NNNNNNN  # sequence conststraints
     #str ..(((...))) NNN.. ||)..( NNNNNN|  # structure constraints
-    #localgc - - - 0.2                         # partial gc-contents
     #globgc 0.6                               # global gc-content
-    #globen -13.4                             # global energy
     """
     with open(path, 'r') as f:
         lines = f.readlines()
@@ -61,7 +57,7 @@ def read_task_description(path):
                         task['str'] = l.replace(' ', 'X')
                     elif l_list[0][1:] == 'seq':
                         l = ''.join(l.split('#seq ')).replace('\n', '')
-                        task['seq'] = ''.join(l_list[1:]).replace('X', '').replace(' ', '')
+                        task['seq'] = ''.join(l_list[1:]).replace('X', '').replace(' ', '').replace('O', '')
                     else:
                         task[l_list[0][1:]] = ''.join(l_list[1:])
                 else:
