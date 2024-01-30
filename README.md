@@ -91,7 +91,7 @@ You can find the example file for the Frog Foot task in the `examples` directory
 
 To run libLEARNA on the example, requesting 10 candidates, you can use
 ```
-liblearna --input_file examples/if_frog_foot_example_liblearna.input --num_solutions 10
+liblearna --input_file examples/if_frog_foot_example_liblearna.input
 ```
 
 If you would like to design RNAs from sequence and structure motifs, you can use `whitespaces` or `X` ('Xtend here') to mark positions for exploration (denoted $\overset{\ast}{?}$ in out ISMB submission).
@@ -111,13 +111,13 @@ which is the same as
 To run libLEARNA on the riboswitch design task, you can use
 
 ```
-liblearna --input_file examples/riboswitch_design_example.input --num_solutions 10 --min_length 66 --max_length 91
+liblearna --input_file examples/riboswitch_design_example.input --min_length 66 --max_length 91
 ```
 To additionally specify a desired GC-content for the design, one can use the `--desired_gc` option with a given tolerance via the `--gc_tolerance` option.
 The default tolerance is set to `0.01`.
 An example call could look as follows:
 ```
-liblearna --input_file examples/riboswitch_design_example.input --num_solutions 10 --min_length 66 --max_length 91 --desired_gc 0.5 --gc_tolerance 0.1
+liblearna --input_file examples/riboswitch_design_example.input --min_length 66 --max_length 91 --desired_gc 0.5 --gc_tolerance 0.1
 ```
 Alternatively, a desired GC-content can also be specified in the input file via the `#globgc` tag:
 ```
@@ -152,6 +152,14 @@ As an example, we use the Riboswitch design examples from above to design RNAs w
 libLEARNA will successively process each task, reporting results whenever a task is done.
 
 ### Command Line Options
+#### Generating Multiple Candidates
+By default libLEARNA generates a single solution. 
+However, one can specify any number of solutions for a given design via the `--num_solutions <natural number>` option.
+The requested number of solutions counts for each individual task provided, in case multiple input tasks are provided.
+An example call to libLEARNA then could look as follows:
+```
+liblearna --input_file examples/if_frog_foot_example_liblearna.input --num_solutions 20
+```
 
 #### Changing the Folding Algorithm
 
