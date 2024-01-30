@@ -80,13 +80,38 @@ liblearna --input_file examples/if_frog_foot_example_liblearna.input --num_solut
 ```
 
 If you would like to design RNAs from sequence and structure motifs, you can use `whitespaces` or `X` ('Xtend here') to mark positions for exploration (denoted $\overset{\ast}{?}$ in out ISMB submission).
-The input file for the design of theophylline riboswitch constructs the for example looks as follows
+The input file for the design of theophylline riboswitch constructs for example looks as follows
 
 ```
 >theophylline riboswitch example
 #seq AAGUGAUACCAGCAUCGUCUUGAUGCCCUUGGCAGCACUUCA NNNNNN NNNNNNNNNN UUUUUUUU
 #str ........NNN(((((.....)))))...NNN(((((((((( NN.... )))))))))) N.......
 ```
+which is the same as
+```
+>theophylline riboswitch example with X
+#seq AAGUGAUACCAGCAUCGUCUUGAUGCCCUUGGCAGCACUUCAXNNNNNNXNNNNNNNNNNXUUUUUUUU
+#str ........NNN(((((.....)))))...NNN((((((((((XNN....X))))))))))XN.......
+```
+To run libLEARNA on the riboswitch design task, you can use
+
+```
+liblearna --input_file examples/riboswitch_design_example.input --num_solutions 10 --min_length 66 --max_length 91
+```
+To additionally specify a desired GC-content for the design, one can use the `--desired_gc` option with a given tolerance via the `--gc_tolerance` option.
+The default tolerance is set to `0.01`.
+An example call could look as follows:
+```
+liblearna --input_file examples/riboswitch_design_example.input --num_solutions 10 --min_length 66 --max_length 91 --desired_gc 0.5 --gc_tolerance 0.1
+```
+Alternatively, a desired GC-content can also be specified in the input file via the `#globgc` tag:
+```
+>theophylline riboswitch example
+#seq AAGUGAUACCAGCAUCGUCUUGAUGCCCUUGGCAGCACUUCA NNNNNN NNNNNNNNNN UUUUUUUU
+#str ........NNN(((((.....)))))...NNN(((((((((( NN.... )))))))))) N.......
+#globgc 0.5
+```
+
 
 ### General Usage
 You can run
