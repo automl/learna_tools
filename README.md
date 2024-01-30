@@ -108,12 +108,35 @@ liblearna --input_file examples/riboswitch_design_example.input --num_solutions 
 ```
 Alternatively, a desired GC-content can also be specified in the input file via the `#globgc` tag:
 ```
->theophylline riboswitch example
+>theophylline riboswitch example with GC content
 #seq AAGUGAUACCAGCAUCGUCUUGAUGCCCUUGGCAGCACUUCA NNNNNN NNNNNNNNNN UUUUUUUU
 #str ........NNN(((((.....)))))...NNN(((((((((( NN.... )))))))))) N.......
 #globgc 0.5
 ```
 
+#### Specifiying Multiple Inputs
+You can define multiple targets in a single input file for libLEARNA.
+As an example, we use the Riboswitch design examples from above to design RNAs with multiple desired GC contents.
+
+```
+>theophylline riboswitch example 1
+#seq AAGUGAUACCAGCAUCGUCUUGAUGCCCUUGGCAGCACUUCA NNNNNN NNNNNNNNNN UUUUUUUU
+#str ........NNN(((((.....)))))...NNN(((((((((( NN.... )))))))))) N.......
+#globgc 0.3
+>theophylline riboswitch example 2
+#seq AAGUGAUACCAGCAUCGUCUUGAUGCCCUUGGCAGCACUUCA NNNNNN NNNNNNNNNN UUUUUUUU
+#str ........NNN(((((.....)))))...NNN(((((((((( NN.... )))))))))) N.......
+#globgc 0.4
+>theophylline riboswitch example 3
+#seq AAGUGAUACCAGCAUCGUCUUGAUGCCCUUGGCAGCACUUCA NNNNNN NNNNNNNNNN UUUUUUUU
+#str ........NNN(((((.....)))))...NNN(((((((((( NN.... )))))))))) N.......
+#globgc 0.5
+>theophylline riboswitch example 4
+#seq AAGUGAUACCAGCAUCGUCUUGAUGCCCUUGGCAGCACUUCA NNNNNN NNNNNNNNNN UUUUUUUU
+#str ........NNN(((((.....)))))...NNN(((((((((( NN.... )))))))))) N.......
+#globgc 0.6
+```
+libLEARNA will successively process each task, reporting results whenever a task is done.
 
 ### Command Line Options
 You can run
@@ -122,6 +145,51 @@ liblearna -h
 ```
 to see an overview of all options for libLEARNA.
 
+#### Changing the Folding Algorithm
+
+To change the folding algorithm from RNAfold MFE predictions to RNAfold with MEA predictions, you can use the `--algorithm` option.
+For example
+```
+liblearna --input_file examples/if_frog_foot_example_liblearna.input --num_solutions 10 --algorithm rnafold_mea
+```
+runs libLEARNA on the Frog Foot example with the MEA folding objective.
+
+#### Plotting Results
+You can directly generate logo plots using the logo_maker Python package.
+```
+liblearna --input_file examples/if_frog_foot_example_liblearna.input --num_solutions 10 --plot_logo
+```
+The plots will by default be saved into the `plots` directory relative to the current working directory.
+However, you can specify a directory for saving plots via the `--plotting_dir <path to directory>` option.
+To visualize plots besides saving, you can use the `--show_plots` flag.
+
+libLEARNA also supports plotting of the structures via VARNA via the `plot_structure` flag. 
+This will generate secondary structure plots of all generated solutions.
+These plots will also be saved into the `plots` directory (or the directory for saving plots provided with the `--plotting_dir` option), and can be directly visualized with the `--show_plots` flag.
+
+#### Handling Results
+You can save the predictions of libLEARNA with the `--results_dir <path to directory` option. libLEARNA allows to select from three output formats: `pickle`, `csv`, and `fasta`.
+The output format is specified via the `--output_format <string>` option.
+By default, results are saved in a pandas data frame in `pickle` format.
+You can specify a comma separated output of the dataframe when choosing the `csv` format.
+The `fasta` format outputs a file with the following lines:
+
+```
+>ID of task
+<sequence>
+<structure in dot-bracket format>
+```
+
+#### Limiting the Runtime
+You can limit the runtime of libLEARNA via the `--timeout <time in seconds>` option.
+The provided limit counts for each target if providing multiple input tasks.
+
+For resetting the weights of the policy network to their initial values, you can use the `--restart_timeout <time in seconds>` option.
+The algorithm will start from scratch after the provided time.
+
+#### Show all Designs
+While most of the time w are interested in the solutions, we can also add the `--show_all_designs` flag to output all the designed candidates.
+We note, however, that this option should be used with care because, depending on the specified runtime and the task, there might be a large number of candidates.
 
 ### CM design with libLEARNA
 To run the CM design with libLEARNA, you need to install Infernal:
