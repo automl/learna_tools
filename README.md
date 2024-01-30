@@ -49,18 +49,20 @@ conda activate learna_tools
 
 ### Installation from github repository
 
-When your system satisfies all requirements, you can install `learna_tools` via pip, either directly within the `learna_tools` by running
+When your system satisfies all requirements, you can install `learna_tools` via pip
 
 ```
 pip install .
 ```
+
+---
 
 ## libLEARNA
 libLEARNA is the most recent algorithm from the LEARNA family of algorithms. It provides an interface to design RNAs for the partial RNA design paradigm.
 In essence, libLEARNA can design RNAs from sequence and structure motifs under different objectives.
 For more information, take a look into our [bioRxiv paper](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf) that is currently under review at ISMB 2024.
 
-### Input
+### Program Input
 libLEARNA requires sequence and structure inputs to be defined in an input file with specific tags.
 Sequence input follow after a `#seq` tag, and structure inputs follow after a `#str` tag.
 A typical input file for inverse RNA folding on the Frog Foot example of the [Eterna100 benchmark](https://github.com/eternagame/eterna100-benchmarking) then looks as follows
@@ -113,7 +115,7 @@ Alternatively, a desired GC-content can also be specified in the input file via 
 ```
 
 
-### General Usage
+### Command Line Options
 You can run
 ```
 liblearna -h
@@ -126,6 +128,7 @@ To run the CM design with libLEARNA, you need to install Infernal:
 ```
 conda install -c bioconda infernal
 ```
+If you use the recommended install via the provided `environment.yml` file, Infernal is already installed.
 
 You can use the latest Rfam database CMs as follows
 
@@ -164,36 +167,25 @@ with the following options
 - `--min_length`: The minimum length of the designed candidates.
 - `--max_length`: The maximum length of the designed candidates.
 
-## Usage
+### RRI Design with libLEARNA
+To run the RRI design with learna, you require [intaRNA](https://rna.informatik.uni-freiburg.de/IntaRNA/Input.jsp).
+You can install intaRNA via conda as follows
+```
+conda install intarna=1.2.5 -c bioconda 
+```
+If you are using the recommended install via the provided `environment.yml`, intaRNA is already installed.
 
-We provide simple command line interfaces for the following algorithms
-
-- LEARNA
-- Meta-LEARNA
-- Meta-LEARNA-Adapt
-- libLEARNA
-
-These tools run with the default parameters of each of the algorithms. However, it is also possible to change the parameters.
-You can run
+To run libLEARNA for RRI design, you can use the following call
 
 ```
-$ <tool> -h
+liblearna --input_file examples/rri_design.input --rri_design --rri_threshold 10 --min_length 50 --max_length 60
 ```
-, where `<tool>` is one of `learna, meta-learna, meta-learna-adapt, liblearna`, to see a list of available options for the respective tool.
+This will use the example design space without any restrictions (unconstrained design space in our ISMB submission) with the default target mRNA.
+However, you can use a new target via the `--rri_target` option, followed by the target sequence.
+The `--rri_threshold` parameter allows to set a threshold for the reported canidates.
+We use positive numbers here, because the threshold is based on the reward of libLEARNA, however, since we are optimizing for energy, the actual threshold from our example corresponds to an energy threshold of -10.
 
-In the following, we provide some information about the different approaches for RNA design as well as on how to run each individual tool.
-
-## libLEARNA
-
-### Program Input
-
-
-### Command Line Options
-
-### Outputs
-
-
-
+---
 ## LEARNA
 
 The LEARNA algorithm takes a secondary structure in dot-bracket notation as input to generate a RNA sequence that folds into the desired structure.
