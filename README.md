@@ -89,7 +89,7 @@ A typical input file for inverse RNA folding on the Frog Foot example of the [Et
 
 You can find the example file for the Frog Foot task in the `examples` directory as `if_frog_foot_example_liblearna.input`.
 
-To run libLEARNA on the example, requesting 10 candidates, you can use
+To run libLEARNA on the example you can use
 ```
 liblearna --input_file examples/if_frog_foot_example_liblearna.input
 ```
