@@ -18,6 +18,9 @@ LEARNA, Meta-LEARNA, Meta-LEARNA-Adapt, and libLEARNA as described in the follow
 
 - Python 3.6
 - RNAfold from the ViennaRNA package
+- [Infernal](https://academic.oup.com/bioinformatics/article/29/22/2933/316439) [optional]
+- [intaRNA](https://academic.oup.com/nar/article/45/W1/W435/3796327) [optional]
+- [VARNA](https://academic.oup.com/bioinformatics/article/25/15/1974/210730) [optional]
 
 However, we provide a `conda` environment for a more convenient installation of `learna_tools`.
 
@@ -61,6 +64,16 @@ pip install .
 libLEARNA is the most recent algorithm from the LEARNA family of algorithms. It provides an interface to design RNAs for the partial RNA design paradigm.
 In essence, libLEARNA can design RNAs from sequence and structure motifs under different objectives.
 For more information, take a look into our [bioRxiv paper](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf) that is currently under review at ISMB 2024.
+
+### General usage
+The general interface to libLEARNA is as follows
+```
+liblearna --input_file <path to file> [options]
+```
+To see a list of available command line options, run
+```
+liblearna -h
+```
 
 ### Program Input
 libLEARNA requires sequence and structure inputs to be defined in an input file with specific tags.
@@ -139,11 +152,6 @@ As an example, we use the Riboswitch design examples from above to design RNAs w
 libLEARNA will successively process each task, reporting results whenever a task is done.
 
 ### Command Line Options
-You can run
-```
-liblearna -h
-```
-to see an overview of all options for libLEARNA.
 
 #### Changing the Folding Algorithm
 
