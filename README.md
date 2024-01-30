@@ -252,7 +252,7 @@ with the following options
 - `--max_length`: The maximum length of the designed candidates.
 
 ### RRI Design with libLEARNA
-To run the RRI design with learna, you require [intaRNA](https://rna.informatik.uni-freiburg.de/IntaRNA/Input.jsp).
+To run the RRI design with libLEARNA, you require [intaRNA](https://rna.informatik.uni-freiburg.de/IntaRNA/Input.jsp).
 You can install intaRNA via conda as follows
 ```
 conda install intarna=1.2.5 -c bioconda 
