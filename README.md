@@ -267,7 +267,7 @@ All of the following calls are exemplified using the LEARNA approach, however, y
 The easiest way of running LEARNA from commandline is to simply call
 
 ```
-learna --target-structure "<RNA structure in dot-bracket format>"
+learna --target_structure "<RNA structure in dot-bracket format>"
 ```
 
 This will run the LEARNA algorithm on the secondary structure in dot-bracket notation.
@@ -279,7 +279,7 @@ Using the `--hamming_tolerance` argument, you can further define a distance (Ham
 
 For example, the output of the call
 ```
-learna --target-structure "...(((((....)))))..." --num_solutions 10 --hamming_tolerance 10
+learna --target_structure "...(((((....)))))..." --num_solutions 10 --hamming_tolerance 10
 ```
 could look as follows
 
