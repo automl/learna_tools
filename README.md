@@ -7,7 +7,7 @@ LEARNA, Meta-LEARNA, Meta-LEARNA-Adapt, and libLEARNA as described in the follow
 - [Learning to Design RNA](https://openreview.net/pdf?id=ByfyHh05tQ) (ICLR'19)
 - [Partial RNA Design](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf) (Under Review @ISMB 2024)
 
-The standalone repository for the LEARNA approach can be found [here](https://github.com/automl/learna).
+The original repository of the LEARNA approach can be found [here](https://github.com/automl/learna).
 
 ---
 
