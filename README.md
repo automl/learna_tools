@@ -279,7 +279,7 @@ Using the `--hamming_tolerance` argument, you can further define a distance (Ham
 
 For example, the output of the call
 ```
-$ learna --target-structure ...(((((....)))))... --min_solutions 10 --hamming_tolerance 10
+$ learna --target-structure "...(((((....)))))..." --num_solutions 10 --hamming_tolerance 10
 ```
 could look as follows
 
