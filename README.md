@@ -256,7 +256,7 @@ All three algorithms, LEARNA, Meta-LEARNA, and Meta-LEARNA-Adapt further support
 
 To run LEARNA on the Frog Foot example of the Eterna100 Benchmark, you can call
 ```
-$ learna --input_file examples/frog_foot_example.input --min_solutions 1000 --timeout 1000
+learna --input_file examples/frog_foot_example.input --min_solutions 1000 --timeout 1000
 ```
 This will run learna until it generated 1000 solutions for the target.
 
@@ -267,7 +267,7 @@ All of the following calls are exemplified using the LEARNA approach, however, y
 The easiest way of running LEARNA from commandline is to simply call
 
 ```
-$ learna --target-structure "<RNA structure in dot-bracket format>"
+learna --target-structure "<RNA structure in dot-bracket format>"
 ```
 
 This will run the LEARNA algorithm on the secondary structure in dot-bracket notation.
@@ -279,7 +279,7 @@ Using the `--hamming_tolerance` argument, you can further define a distance (Ham
 
 For example, the output of the call
 ```
-$ learna --target-structure "...(((((....)))))..." --num_solutions 10 --hamming_tolerance 10
+learna --target-structure "...(((((....)))))..." --num_solutions 10 --hamming_tolerance 10
 ```
 could look as follows
 
