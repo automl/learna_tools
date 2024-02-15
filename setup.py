@@ -10,6 +10,7 @@ setup(
     long_description_content_type='text/markdown',
     packages=find_packages(),
     install_requires=[
+        "readme-renderer==16.0",
         "Distance==0.1.3",
         "GraKeL==0.1.8",
         "numpy==1.9.5",
