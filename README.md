@@ -5,7 +5,7 @@ The `learna_tools` package provides commandline interfaces for
 LEARNA, Meta-LEARNA, Meta-LEARNA-Adapt, and libLEARNA as described in the following publications
 
 - [Learning to Design RNA](https://openreview.net/pdf?id=ByfyHh05tQ) (ICLR'19)
-- [Partial RNA Design](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf) (Under Review @ISMB 2024)
+- [Partial RNA Design](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf) (Under Review)
 
 The original repository of the LEARNA approach can be found [here](https://github.com/automl/learna).
 
@@ -49,7 +49,7 @@ pip install .
 ## libLEARNA
 libLEARNA is the most recent algorithm from the LEARNA family of algorithms. It provides an interface to design RNAs for the partial RNA design paradigm.
 In essence, libLEARNA can design RNAs from sequence and structure motifs under different objectives.
-For more information, take a look into our [bioRxiv paper](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf) that is currently under review at ISMB 2024.
+For more information, take a look into our [bioRxiv paper](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf) that is currently under review.
 
 ### General usage
 The general interface to libLEARNA is as follows
@@ -80,7 +80,7 @@ To run libLEARNA on the example you can use
 liblearna --input_file examples/if_frog_foot_example_liblearna.input
 ```
 
-If you would like to design RNAs from sequence and structure motifs, you can use `whitespaces` or `X` ('Xtend here') to mark positions for exploration (denoted $\overset{\ast}{?}$ in out ISMB submission).
+If you would like to design RNAs from sequence and structure motifs, you can use `whitespaces` or `X` ('Xtend here') to mark positions for exploration (denoted $\overset{\ast}{?}$ in our paper).
 The input file for the design of theophylline riboswitch constructs for example looks as follows
 
 ```
@@ -233,7 +233,7 @@ To run libLEARNA for RRI design, you can use the following call
 ```
 liblearna --input_file examples/rri_design.input --rri_design --rri_threshold 10 --min_length 50 --max_length 60
 ```
-This will use the example design space without any restrictions (unconstrained design space in our ISMB submission) with the default target mRNA.
+This will use the example design space without any restrictions (unconstrained design space in our paper) with the default target mRNA.
 However, you can use a new target via the `--rri_target` option, followed by the target sequence.
 The `--rri_threshold` parameter allows to set a threshold for the reported canidates.
 We use positive numbers here, because the threshold is based on the reward of libLEARNA, however, since we are optimizing for energy, the actual threshold from our example corresponds to an energy threshold of -10.
