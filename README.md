@@ -43,6 +43,15 @@ Then you can install `learna_tools` into the nevironment with
 ```
 pip install .
 ```
+or 
+```
+pip install -e .
+```
+for a dynamic install.
+You can also install `learna_tools` directly via PYPI:
+```
+pip install learna_tools
+```
 
 ---
 
