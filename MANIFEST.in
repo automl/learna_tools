@@ -3,3 +3,4 @@ include README.md
 recursive-include learna_tools/ *
 recursive-include learna_tools/learna *
 recursive-include learna_tools/liblearna *
+recursive-include bin *
