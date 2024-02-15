@@ -11,7 +11,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         "Distance",
-        "GraKeL",
+        "GraKeL==0.1.8",
         "numpy",
         "pandas",
         "pyaml",
