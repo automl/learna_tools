@@ -55,5 +55,5 @@ setup(
     author_email='runget@cs.uni-freiburg.de',
     license='MIT',
     keywords='RNA Design',
-    url='https://github.com/Rungetf/learna_tools.git'
+    url='https://github.com/automl/learna_tools.git'
 )
