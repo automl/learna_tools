@@ -32,33 +32,27 @@ Next, setup the conda environment to include all requirements with
 conda env create -f environment.yml
 ```
 
-and
-
-```
-conda activate learna_tools
-```
-
-Then you can install `learna_tools` into the nevironment with
-
-```
-pip install .
-```
-or 
-```
-pip install -e .
-```
-for a dynamic install.
-You can also install `learna_tools` directly via PYPI:
-```
-pip install learna_tools
-```
-
 ---
+
+## Data
+All datasets are include in the repository in the data directory as `tar.gz` archives. You can extract files e.g. with
+
+```
+tar -xzvf <archive>.tar.gz
+```
 
 ## libLEARNA
 libLEARNA is the most recent algorithm from the LEARNA family of algorithms. It provides an interface to design RNAs for the partial RNA design paradigm.
 In essence, libLEARNA can design RNAs from sequence and structure motifs under different objectives.
 For more information, take a look into our [bioRxiv paper](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf) that is currently under review.
+
+### Meta-Optimization
+You can start a meta-optimization run for libLEARNA with the following command
+
+```
+python -m learna_tools.liblearna.optimization.bohb --min_budget 1 --max_budget 10 --n_iter 1 --n_cores 2 --shared_dir results/ --run_id test --nic_name lo --data_dir data  --n_train_seqs 1 --validation_timeout 1 --mode test
+```
+Note that we run locally in test mode here, a special worker that we created to have fast evaluations by using the validation set as training and evaluation data.
 
 ### General usage
 The general interface to libLEARNA is as follows

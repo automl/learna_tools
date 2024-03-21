@@ -4,7 +4,7 @@ os.environ["OMP_NUM_THREADS"] = "1"
 
 import logging
 
-logging.basicConfig(level=logging.ERROR)
+logging.basicConfig(level=logging.DEBUG)
 
 import argparse
 import pickle
@@ -18,9 +18,8 @@ from hpbandster.core.base_iteration import  Datum
 from hpbandster.core.result import Result
 from hpbandster.optimizers import BOHB as BOHB
 
-from src.optimization.learna_worker import LearnaWorker
-from src.optimization.meta_learna_worker import MetaLearnaWorker
-from src.optimization.meta_learna_adapt_worker import MetaLearnaAdaptWorker
+from learna_tools.liblearna.optimization.liblearna_worker import LibLearnaWorker
+from learna_tools.liblearna.optimization.liblearna_worker_test import LibLearnaWorkerTest
 
 
 def load_valid_results(directory):
@@ -125,7 +124,9 @@ parser.add_argument(
     help="A directory that is accessible for all processes, e.g. a NFS share.",
 )
 
-parser.add_argument("--mode", choices=["learna", "meta_learna", "meta_learna_adapt"], default="learna")
+parser.add_argument("--mode", choices=["reproduce", "test"], default="test")
+parser.add_argument("--n_train_seqs", type=int, default=100000)
+parser.add_argument("--validation_timeout", type=int, default=60)
 # parser.add_argument(
 #     "--load_existing", help="Flag to load exsting data", action="store_true"
 # )
@@ -141,28 +142,21 @@ args = parser.parse_args()
 
 os.makedirs(args.shared_directory, exist_ok=True)
 
-if args.mode == "learna":
-    worker_cls = LearnaWorker
-    worker_args = dict(
-        data_dir=args.data_dir, num_cores=args.n_cores, train_sequences=range(1, 101)
-    )
-
-if args.mode == "meta_learna":
-    worker_cls = MetaLearnaWorker
+if args.mode == "reproduce":
+    worker_cls = LibLearnaWorker
     worker_args = dict(
         data_dir=args.data_dir,
         num_cores=args.n_cores,
-        train_sequences=range(1, 100),
-        validation_timeout=1,
+        train_sequences=range(1, args.n_train_seqs),  #  100000),
+        validation_timeout=args.validation_timeout,
     )
-
-if args.mode == "meta_learna_adapt":
-    worker_cls = MetaLearnaAdaptWorker
+elif args.mode == "test":
+    worker_cls = LibLearnaWorkerTest
     worker_args = dict(
         data_dir=args.data_dir,
         num_cores=args.n_cores,
-        train_sequences=range(1, 100000),
-        validation_timeout=60,
+        train_sequences=range(1, args.n_train_seqs),  #  100000),
+        validation_timeout=args.validation_timeout,
     )
 
 
@@ -199,7 +193,7 @@ w.run(background=True)
 
 print(worker_cls.get_configspace())
 
-print("############# LOADING PREVIOUS RUN")
+# print("############# LOADING PREVIOUS RUN")
 # previous_run = load_valid_results(args.previous_run_dir)
 
 # Run an optimizer

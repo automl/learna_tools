@@ -8,11 +8,11 @@ import ConfigSpace as CS
 from hpbandster.core.worker import Worker
 from pathlib import Path
 
-from src.learna.agent import NetworkConfig, get_network, AgentConfig
-from src.learna.environment import RnaDesignEnvironment, RnaDesignEnvironmentConfig
-from src.learna.design_rna import design_rna
-from src.learna.learn_to_design_rna import learn_to_design_rna
-from src.data.parse_dot_brackets import parse_dot_brackets, parse_local_design_data
+from learna_tools.liblearna.agent import NetworkConfig, get_network, AgentConfig
+from learna_tools.liblearna.optimization_environment import RnaDesignEnvironment, RnaDesignEnvironmentConfig
+from learna_tools.liblearna.design_rna import design_rna
+from learna_tools.liblearna.learn_to_design_rna import learn_to_design_rna
+from learna_tools.liblearna.data.parse_dot_brackets import parse_dot_brackets, parse_local_design_data
 
 
 class MetaLearnaWorker(Worker):

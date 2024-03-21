@@ -11,10 +11,10 @@ from pathlib import Path
 from hpbandster.core.worker import Worker
 
 
-from src.learna.agent import NetworkConfig, get_network, AgentConfig
-from src.learna.environment import RnaDesignEnvironment, RnaDesignEnvironmentConfig
-from src.learna.design_rna import design_rna
-from src.data.parse_dot_brackets import parse_dot_brackets, parse_local_design_data
+from learna_tools.liblearna.agent import NetworkConfig, get_network, AgentConfig
+from learna_tools.liblearna.environment import RnaDesignEnvironment, RnaDesignEnvironmentConfig
+from learna_tools.liblearna.design_rna import design_rna
+from learna_tools.liblearna.data.parse_dot_brackets import parse_dot_brackets, parse_local_design_data
 
 
 class LearnaWorker(Worker):
@@ -41,13 +41,13 @@ class LearnaWorker(Worker):
 
         if config["local_design"]:
             self.train_sequences = parse_local_design_data(
-            dataset=Path(self._data_dir, "rfam_local_validation").stem,
+            dataset=Path(self._data_dir, "rfam_PD_validation").stem,
             data_dir=self._data_dir,
             target_structure_ids=self.sequence_ids,
             )
         else:
             self.train_sequences = parse_dot_brackets(
-                dataset=Path(self._data_dir, "rfam_local_validation").stem,
+                dataset=Path(self._data_dir, "rfam_PD_validation").stem,
                 data_dir=self._data_dir,
                 target_structure_ids=self.sequence_ids,
             )
@@ -83,7 +83,7 @@ class LearnaWorker(Worker):
             # gc_improvement_step=True,
             # gc_postprocessing=False,
         )
-
+        print(budget)
         validation_info = self._evaluate(
             budget, config["restart_timeout"], network_config, agent_config, env_config
         )
