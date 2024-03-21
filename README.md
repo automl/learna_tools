@@ -20,10 +20,17 @@ To install the current version of `learna_tools` from the github repository, fir
 git clone https://github.com/Rungetf/learna_tools.git
 ```
 
-And `cd` into the cloned directory
+Then `cd` into the cloned directory
 
 ```
 cd learna_tools
+```
+
+Make sure to switch to the libLEARNA_reproduce branch, e.g. via
+
+```
+git fetch
+git checkout libLEARNA_reproduce
 ```
 
 Next, setup the conda environment to include all requirements with
