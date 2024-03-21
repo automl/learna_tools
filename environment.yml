@@ -1,4 +1,4 @@
-name: learna_tools
+name: liblearna_reproduce
 channels:
   - bioconda
   - lb_arrakistx
