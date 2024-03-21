@@ -39,6 +39,11 @@ Next, setup the conda environment to include all requirements with
 conda env create -f environment.yml
 ```
 
+and activate it
+```
+conda activate learna_tools
+```
+
 ---
 
 ## Data
