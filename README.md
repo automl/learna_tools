@@ -41,7 +41,7 @@ conda env create -f environment.yml
 
 and activate it
 ```
-conda activate learna_tools
+conda activate liblearna_reproduce
 ```
 
 ---
