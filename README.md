@@ -12,7 +12,7 @@ The original repository of the LEARNA approach can be found [here](https://githu
 ---
 
 # IMPORTANT
-Please find the source code for reproducing our ISMB submission in the branch libLEARNA@ISMB24.
+Please find the source code for reproducing our submission under Review in the branch libLEARNA_reproduce.
 
 ---
 
