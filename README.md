@@ -59,12 +59,35 @@ In essence, libLEARNA can design RNAs from sequence and structure motifs under d
 For more information, take a look into our [bioRxiv paper](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf) that is currently under review.
 
 ### Meta-Optimization
-You can start a meta-optimization run for libLEARNA with the following command
+libLEARNA is jointly trained and tuned during meta-optimization. This also includes an architecture search for the policy network. We provide a script to run the meta-optimization from command line.
+
+The meta-optimization process from our paper, therefore, has some compute requirements.
+However, we provide a script to either reproduce the meta-optimization from our paper, or run meta-optimization on a small toy training and validation set to get an idea of the process.
+
+We strongly recommend to only run the full meta-optimization on a compute cluster using array jobs to spread the workload across multiple workers (You'll need to set the `--worker` except for the first instance which will setup the name server and use a different `--nic_name` depending on your system).
+
+To run the meta-optimization test, you can use the following command
 
 ```
-python -m learna_tools.liblearna.optimization.bohb --min_budget 1 --max_budget 10 --n_iter 1 --n_cores 2 --shared_dir results/ --run_id test --nic_name lo --data_dir data  --n_train_seqs 1 --validation_timeout 1 --mode test
+./reproduce_meta_optimization.sh test_run test 20
 ```
-Note that we run locally in test mode here, a special worker that we created to have fast evaluations by using the validation set as training and evaluation data.
+
+The script will run BOHB with a minimum training budget of 1 second and a maximum training budget of 9 seconds.
+The validation timeout is set to 1 second.
+The valiation and training data contains only 1 sample.
+
+The results of the script, including all models and configurations, will be saved to `results/bohb/<run_id>`, where the run id is defined by the first command line argument of the script (here `test_run`).
+
+The second argument defines the mode of the script (here `test`), while the third is the number of iterations that BOHB will run (here `20`).
+
+To reproduce the original meta-optimization run (NOT recommended) you can simply run
+
+```
+./reproduce_meta_optimization.sh reproduce reproduce
+```
+
+The script includes plotting and printing of some information about the meta-optimization after it is done.
+
 
 ### General usage
 The general interface to libLEARNA is as follows

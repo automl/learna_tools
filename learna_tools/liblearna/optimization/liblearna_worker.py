@@ -369,7 +369,7 @@ class LibLearnaWorker(Worker):
                 "embedding_size_tuple", lower=1, upper=21, default_value=1
             )
         # config_space.add_hyperparameters([encoding, embedding_size_seq_bias, embedding_size_tuple])
-        config_space.add_hyperparameters([encoding, embedding_size_tuple])
+        config_space.add_hyperparameters([embedding_size_tuple])
         # cond_tuple = CS.EqualsCondition(embedding_size_tuple, encoding, 'tuple')
         # cond_seq_bias = CS.EqualsCondition(embedding_size_seq_bias, encoding, 'sequence_bias')
         # config_space.add_condition(cond_tuple)
@@ -413,6 +413,10 @@ class LibLearnaWorker(Worker):
         config["reward_function"] = 'structure_only'
         config["predict_pairs"] = 1
         config["encoding"] = 'tuple'
+        config["embedding_size"] = config["embedding_size_tuple"]
+        config["embedding_indices"] = 21
+        del config["embedding_size_tuple"]
+
         # if config["encoding"] == 'multihot':
         #     config["embedding_size"] = 0
         #     config["embedding_indices"] = 0

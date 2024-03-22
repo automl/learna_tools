@@ -360,19 +360,20 @@ class LibLearnaWorkerTest(Worker):
         )
 
 
-        encoding = CS.CategoricalHyperparameter(
-                "encoding", choices=['tuple']  # ['sequence_bias', 'multihot', 'tuple']
-            )
-        embedding_size_seq_bias = CS.UniformIntegerHyperparameter(
-                "embedding_size_seq_bias", lower=1, upper=9, default_value=1  # FR: changed embedding size upper from 4 to 8 and then to 9
-            )
+        # encoding = CS.CategoricalHyperparameter(
+        #         "encoding", choices=['tuple']  # ['sequence_bias', 'multihot', 'tuple']
+        #     )
+        # embedding_size_seq_bias = CS.UniformIntegerHyperparameter(
+        #         "embedding_size_seq_bias", lower=1, upper=9, default_value=1  # FR: changed embedding size upper from 4 to 8 and then to 9
+        #     )
         embedding_size_tuple = CS.UniformIntegerHyperparameter(
                 "embedding_size_tuple", lower=1, upper=21, default_value=1
             )
-        config_space.add_hyperparameters([encoding, embedding_size_seq_bias, embedding_size_tuple])
-        cond_tuple = CS.EqualsCondition(embedding_size_tuple, encoding, 'tuple')
+        # config_space.add_hyperparameters([encoding, embedding_size_seq_bias, embedding_size_tuple])
+        config_space.add_hyperparameters([embedding_size_tuple])
+        # cond_tuple = CS.EqualsCondition(embedding_size_tuple, encoding, 'tuple')
         # cond_seq_bias = CS.EqualsCondition(embedding_size_seq_bias, encoding, 'sequence_bias')
-        config_space.add_condition(cond_tuple)
+        # config_space.add_condition(cond_tuple)
         # config_space.add_condition(cond_seq_bias)
 
 
@@ -412,17 +413,21 @@ class LibLearnaWorkerTest(Worker):
         config["local_design"] = True
         config["reward_function"] = 'structure_only'
         config["predict_pairs"] = 1
-        if config["encoding"] == 'multihot':
-            config["embedding_size"] = 0
-            config["embedding_indices"] = 0
-        elif config["encoding"] == 'tuple':
-            config["embedding_size"] = config["embedding_size_tuple"]
-            config["embedding_indices"] = 21
-            del config["embedding_size_tuple"]
-        else:
-            config["embedding_size"] = config["embedding_size_seq_bias"]
-            config["embedding_indices"] = 9
-            del config["embedding_size_seq_bias"]
+        config["encoding"] = 'tuple'
+        config["embedding_size"] = config["embedding_size_tuple"]
+        config["embedding_indices"] = 21
+        del config["embedding_size_tuple"]
+        # if config["encoding"] == 'multihot':
+        #     config["embedding_size"] = 0
+        #     config["embedding_indices"] = 0
+        # elif config["encoding"] == 'tuple':
+        #     config["embedding_size"] = config["embedding_size_tuple"]
+        #     config["embedding_indices"] = 21
+        #     del config["embedding_size_tuple"]
+        # else:
+        #     config["embedding_size"] = config["embedding_size_seq_bias"]
+        #     config["embedding_indices"] = 9
+        #     del config["embedding_size_seq_bias"]
 
 
         # config["trainingset"] = 'rfam_PD_short_train'
