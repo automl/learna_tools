@@ -52,12 +52,16 @@ pip install .
 
 ---
 
+## Reproduce Paper Results
+In the following parts we describe how to reproduce the results from our paper.
+
 ## Data
 All datasets are include in the repository in the data directory as `tar.gz` archives. You can extract files e.g. with
 
 ```
 tar -xzvf <archive>.tar.gz
 ```
+For the reproducing scripts, you do not need to extract the data as this is done on the fly.
 
 ## libLEARNA
 libLEARNA is the most recent algorithm from the LEARNA family of algorithms. It provides an interface to design RNAs for the partial RNA design paradigm.
