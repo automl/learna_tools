@@ -44,6 +44,12 @@ and activate it
 conda activate liblearna_reproduce
 ```
 
+Then install learna_tools via pip
+
+```
+pip install .
+```
+
 ---
 
 ## Data
@@ -97,6 +103,53 @@ python learna_tools/liblearna/optimization/analyse/get_state_radius.py --conv1 <
 ```
 
 You can then use your config for running libLEARNA, while making sure that you load the correct model from the output directory of the meta-optimization by specifying the correct path via the `--restore_path` parameter (see below for more information).
+
+### Reproduce Eterna100 version 2 results
+Note that both, LEARNA and libLEARNA are not using seeds. 
+Therefore, each run might slightly differ. 
+However, we observe the same performance across multiple runs for both methods when running longer evaluations (like the 1 hour benchmarks or the 24 hours for the Eterna100 evaluations)
+For the 1-shot performance, this might result in different results. 
+We therefore include the original predictions used for the paper in the repository (1-shot-predictions-raw) for both methods.
+For partial RNA design tasks, one can seed the task generation process.
+
+#### One-shot-performance
+To run the 1-shot-experiment, you can use
+
+```
+./reproduce_one_shot_experiment.sh
+```
+
+To plot the results, use
+
+```
+python plot_1_shot.py --liblearna_directory results/liblearna_one_shot/ --metalearna_dir results/metalearna_one_shot
+```
+You can reproduce the plot from the paper by reading the raw predictions from the files:
+
+```
+python plot_1_shot.py --liblearna_directory results/liblearna_one_shot/ --metalearna_dir results/metalearna_one_shot --read_raw
+```
+
+#### Changing Objectives
+We do not provide a special script for this evaluation.
+However, one can adjust the call for libLEARNA in the `reproduce_one_shot_performance.sh` to obtain the results as follows:
+
+- use Weisfeiler-Lehman graph kernel with `--distance_metric wl`
+- use MEA objective with `--algorithm rnafold_mea`
+- set timeout with `--timeout 86400`
+- set restarting time with `--restart_timeout 1800`
+
+The other parameters remain unchanged.
+However, we do not recommend to run these experiments locally because each sample is evaluated for 1 day.
+
+Instead, you can test these options with e.g.
+
+```
+liblearna --input_file examples/cif_frog_foot_example_liblearna.input --timeout 3 --show_all_designs --results_dir results/liblearna_one_shot --distance_metric wl --algorithm rnafold_mea --restart_timeout 1 --num_solutions 100
+```
+
+### Experiments with GC contents
+
 
 
 ### General usage

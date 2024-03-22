@@ -10,5 +10,3 @@ dependencies:
   - contrafold
   - intarna=1.2.5
   - infernal
-  - pip:
-    - learna_tools

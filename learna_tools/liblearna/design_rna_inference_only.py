@@ -90,7 +90,8 @@ def _get_episode_finished(timeout,
                               'GC-content': gc_content,
                               'length': len(candidate_from_info),
                               })
-        elif cm_design:
+
+        if cm_design:
             if last_reward >= cm_threshold:
                 if candidate_from_info not in [s['sequence'] for s in SOLUTIONS]:
                     SOLUTIONS.append({'Id': target_id,
