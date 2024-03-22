@@ -52,9 +52,6 @@ pip install .
 
 ---
 
-## Reproduce Paper Results
-In the following parts we describe how to reproduce the results from our paper.
-
 ## Data
 All datasets are include in the repository in the data directory as `tar.gz` archives. You can extract files e.g. with
 
@@ -67,6 +64,11 @@ For the reproducing scripts, you do not need to extract the data as this is done
 libLEARNA is the most recent algorithm from the LEARNA family of algorithms. It provides an interface to design RNAs for the partial RNA design paradigm.
 In essence, libLEARNA can design RNAs from sequence and structure motifs under different objectives.
 For more information, take a look into our [bioRxiv paper](https://www.biorxiv.org/content/10.1101/2023.12.29.573656v1.full.pdf) that is currently under review.
+
+---
+
+### Reproduce Paper Results
+In the following parts we describe how to reproduce the results from our paper.
 
 ### Meta-Optimization
 libLEARNA is jointly trained and tuned during meta-optimization. This also includes an architecture search for the policy network. We provide a script to run the meta-optimization from command line.
@@ -207,6 +209,7 @@ The `--rri_threshold` parameter allows to set a threshold for the reported canid
 We use positive numbers here, because the threshold is based on the reward of libLEARNA, however, since we are optimizing for energy, the actual threshold from our example corresponds to an energy threshold of -10.
 To run the other two search spaces use the same call but the examples `rri_design_rnafold_full_struc_partial_sec.input` and `rri_design_rnafold_full_structure.input`.
 
+---
 
 ### General usage
 The general interface to libLEARNA is as follows
