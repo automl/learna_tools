@@ -149,7 +149,59 @@ liblearna --input_file examples/cif_frog_foot_example_liblearna.input --timeout 
 ```
 
 ### Experiments with GC contents
+To run libLEARNA on the ArchiveII dataset with desired GC contents, please run
 
+```
+./reproduce_gc_experiments.sh
+```
+Again we note that each sample is until a solution is found and for a maximum runtime of 1 hour.
+
+### Riboswitch Design
+To run libLEARNA to produce theophylline riboswitch constructs use
+
+```
+liblearna --input_file examples/riboswitch_design_example.input --num_solutions 100 --min_length 66 --max_length 91
+```
+You can add desired GC-contents with `--desired_gc <float>` and a tolerance with `--gc_tolerance <float>`. The tolerance defaults to 0.01.
+
+### Design of Sequences that Match the Hammerhead Ribozyme covariance model
+You can use the latest Rfam database CMs as follows
+```
+mkdir rfam_cms
+```
+no go to the directory
+```
+cd rfam_cms
+```
+and download Rfam CMs
+```
+wget https://ftp.ebi.ac.uk/pub/databases/Rfam/CURRENT/Rfam.cm.gz
+```
+You can unzip the files with
+```
+gunzip Rfam.cm.gz
+```
+Then run
+```
+cmpress Rfam.cm
+```
+
+To design RNAs that match the Hammrhead ribozyme (Type III) family as described in our paper you can run
+
+```
+liblearna --input_file examples/cm_design.input --num_solutions 20 --cm_design --cm_path rfam_cms/Rfam.cm --cm_name RF00008 --cm_threshold 10 --min_length 50 --max_length 60
+```
+
+### RRI Design
+To run libLEARNA for RRI design, you can use the following call
+```
+liblearna --input_file examples/rri_design.input --rri_design --rri_threshold 10 --min_length 50 --max_length 60
+```
+This will use the example design space without any restrictions (unconstrained design space in our paper) with the default target mRNA.
+However, you can use a new target via the `--rri_target` option, followed by the target sequence.
+The `--rri_threshold` parameter allows to set a threshold for the reported canidates.
+We use positive numbers here, because the threshold is based on the reward of libLEARNA, however, since we are optimizing for energy, the actual threshold from our example corresponds to an energy threshold of -10.
+To run the other two search spaces use the same call but the examples `rri_design_rnafold_full_struc_partial_sec.input` and `rri_design_rnafold_full_structure.input`.
 
 
 ### General usage

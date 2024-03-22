@@ -226,6 +226,8 @@ def design_rna(
     print('### Number of targets:', len(dot_brackets))
     print('### With Ids:', ', '.join([str(i) for i, _, _, _, _ in dot_brackets]))
     print('### Timeout per target:', timeout)
+    print('### Desired GC:', env_config.desired_gc)
+    print('### GC Tolerance:', env_config.gc_tolerance)
     print()
     
     if num_cores > 1:
