@@ -146,7 +146,7 @@ However, one can adjust the call for libLEARNA in the `reproduce_one_shot_perfor
 - set restarting time with `--restart_timeout 1800`
 
 The other parameters remain unchanged.
-However, we do not recommend to run these experiments locally because each sample is evaluated for 1 day.
+However, we do not recommend to run these experiments locally because each sample is evaluated for a maximum runtime of 1 day (if no solution is found earlier).
 
 Instead, you can test these options with e.g.
 
@@ -160,7 +160,7 @@ To run libLEARNA on the ArchiveII dataset with desired GC contents, please run
 ```
 ./reproduce_gc_experiments.sh
 ```
-Again we note that each sample is until a solution is found and for a maximum runtime of 1 hour.
+Again we note that each sample is evaluated until a solution is found and for a maximum runtime of 1 hour.
 
 ### Riboswitch Design
 To run libLEARNA to produce theophylline riboswitch constructs use
@@ -169,6 +169,9 @@ To run libLEARNA to produce theophylline riboswitch constructs use
 liblearna --input_file examples/riboswitch_design_example.input --num_solutions 100 --min_length 66 --max_length 91
 ```
 You can add desired GC-contents with `--desired_gc <float>` and a tolerance with `--gc_tolerance <float>`. The tolerance defaults to 0.01.
+
+Note that libLEARNA adapts to the search space. It might take a few samples to do so. We request 100 solutions in our example, which took roughly 5 minutes in our local tests on a notebook. However, you will observe that even for this amount of solutions, libLEARNA will adapt to the space and provide later solutions much faster than the first one. Requesting 1000 or 10000 solutions, therefore, might be quite fast once libLEARNA adapted to the space.
+When using a desired GC content, the adaptation fast might be longer but in later stages libLEARNA will find solutions with nearly every shot.
 
 ### Design of Sequences that Match the Hammerhead Ribozyme covariance model
 You can use the latest Rfam database CMs as follows
