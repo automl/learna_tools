@@ -38,7 +38,7 @@ for file in "$DATADIR"/*.rna; do
 #str $structure" > "$LIBLEARNA_DIR/$base_filename.input"
     
     echo "Running libLEARNA on $base_filename"
-    liblearna --input_file $LIBLEARNA_DIR/$base_filename.input --timeout 3600 --show_all_designs --results_dir results/liblearna_one_shot --restart_timeout 1800 --gc_tolerance 0.01 --desired_gc $gc_content
+    liblearna --input_file $LIBLEARNA_DIR/$base_filename.input --timeout 3600 --show_all_designs --results_dir results/liblearna_one_shot --restart_timeout 1800 --gc_tolerance 0.01 --desired_gc $gc_content --results_dir results/liblearna_archiveII_gc
         
     # echo "Files for $base_filename created."
 done
