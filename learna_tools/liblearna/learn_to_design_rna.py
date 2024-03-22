@@ -17,7 +17,7 @@ def episode_finished(stats):
     Returns:
        True, meaning to continue running.
     """
-    print(stats)
+    # print(stats)
     return True
 
 
@@ -48,24 +48,24 @@ def learn_to_design_rna(
     Returns:
         Information on the episodes.
     """
-    print('Timeout:', timeout)
-    print('Worker count:', worker_count)
-    print('Save path:', save_path)
-    print('Restore path:', restore_path)
-    print('Network config:', network_config)
-    print('Agent config:', agent_config)
-    print('Env config:', env_config)
-
-    print('Creating environments')
+    # print('Timeout:', timeout)
+    # print('Worker count:', worker_count)
+    # print('Save path:', save_path)
+    # print('Restore path:', restore_path)
+    # print('Network config:', network_config)
+    # print('Agent config:', agent_config)
+    # print('Env config:', env_config)
+# 
+    # print('Creating environments')
     env_config.use_conv = any(map(lambda x: x > 1, network_config.conv_sizes))
     env_config.use_embedding = bool(network_config.embedding_size)
 
-    print('Creating environment instances')
+    # print('Creating environment instances')
     environments = [
         RnaDesignEnvironment(dot_brackets, env_config) for _ in range(worker_count)
     ]
 
-    print('Creating agents')
+    # print('Creating agents')
 
     network = get_network(network_config)
     agent = get_agent(
@@ -82,7 +82,7 @@ def learn_to_design_rna(
         network,
         ppo_agent_kwargs(agent_config, session_config=None),
     )
-    print('Starting threaded runner')
+    # print('Starting threaded runner')
     threaded_runner = ThreadedRunner(agents, environments)
     # Bug in threaded runner requires a summary report
     threaded_runner.run(
@@ -90,18 +90,20 @@ def learn_to_design_rna(
     )
 
     if save_path:
-        print('Saving model to:', save_path)
+        # print('Saving model to:', save_path)
         save_path = Path(save_path)
         save_path.mkdir(parents=True, exist_ok=True)
         agent.save_model(directory=save_path.joinpath("last_model"))
 
     episodes_infos = [environment.episodes_info for environment in environments]
+
+    # print(episodes_infos)
     return episodes_infos
 
 
 if __name__ == "__main__":
     import argparse
-    from ..data.parse_dot_brackets import parse_dot_brackets, parse_local_design_data
+    from learna_tools.liblearna.data.parse_dot_brackets import parse_dot_brackets, parse_local_design_data
 
     parser = argparse.ArgumentParser()
 

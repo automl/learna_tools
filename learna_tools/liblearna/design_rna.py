@@ -25,9 +25,6 @@ from learna_tools.metrics.string_distance import (
 
 from learna_tools.metrics.graph_distance import weisfeiler_lehmann
 
-SOLUTIONS = []
-CANDIDATES = {}
-
 def _get_episode_finished(timeout, stop_once_solved):
     """
     Check for timeout after each episode of designing one entire target structure.
@@ -42,10 +39,9 @@ def _get_episode_finished(timeout, stop_once_solved):
     start_time = time.time()
 
     def episode_finished(runner):
-        # plot = False
+        plot = False
         env = runner.environment
 
-        target_id = env.episodes_info[-1].target_id
         candidate_solution = env.design.primary
         last_reward = runner.episode_rewards[-1]
         candidate_from_info = env.episodes_info[-1].candidate
@@ -63,25 +59,28 @@ def _get_episode_finished(timeout, stop_once_solved):
         # gc_satisfied = env.episodes_info[-1].gc_satisfied
         folding = env.episodes_info[-1].folding
         elapsed_time = time.time() - start_time
-
-        print('Last Reward:', last_reward)
+        if plot:
+            if len(env.episodes_info) > 20000:
+                from matplotlib import pyplot as plt
+                plt.plot([i for i, _ in enumerate(env.episodes_info, 1)], [e.agent_gc for e in env.episodes_info], color='blue', linewidth=1)
+                plt.plot([i for i, _ in enumerate(env.episodes_info, 1)], [e.gc_content for e in env.episodes_info], color='green', linewidth=1)
+                plt.plot([i for i, _ in enumerate(env.episodes_info, 1)], [e.desired_gc for e in env.episodes_info], color='red', linewidth=1)
+                plt.show()
+        # print(elapsed_time, last_reward, last_fractional_hamming, gc_satisfied, last_gc_content, agent_gc, candidate_solution)
+        # if last_reward == 1.0:
+        # folding = fold(candidate_solution)[0]
+        print(steps, elapsed_time, last_reward, len(candidate_solution), folding, candidate_solution, target, delta_gc, gc_satisfied, desired_gc, agent_gc, gc_content)
+            # print(elapsed_time, last_reward, len(candidate_solution), folding, candidate_from_info)
 
         no_timeout = not timeout or elapsed_time < timeout
         # no_timeout = not timeout or counter < timeout
         stop_since_solved = stop_once_solved and last_reward == 1.0
         keep_running = not stop_since_solved and no_timeout
-        # keep_running = steps < timeout
+        keep_running = steps < timeout
         return keep_running
 
     return episode_finished
 
-def get_distance_metric(s):
-    if s == 'levenshtein':
-        return levenshtein_with_n
-    elif s == 'hamming':
-        return hamming_with_n
-    elif s == 'wl':
-        return weisfeiler_lehmann
 
 def design_rna(
     dot_brackets,
@@ -121,8 +120,6 @@ def design_rna(
     env_config.use_embedding = bool(network_config.embedding_size)
     environment = RnaDesignEnvironment(dot_brackets, env_config)
 
-    # pbar = tqdm(total=num_solutions)
-
     network = get_network(network_config)
     # Runner restarts the agent by calling get_agent again
     get_agent = get_agent_fn(
@@ -135,14 +132,14 @@ def design_rna(
     runner = Runner(get_agent, environment)
 
     stop_once_solved = len(dot_brackets) == 1
-    # stop_once_solved = False
+    stop_once_solved = False
     runner.run(
         deterministic=False,
         restart_timeout=restart_timeout,
         stop_learning=stop_learning,
         episode_finished=_get_episode_finished(timeout, stop_once_solved),
     )
-    return SOLUTIONS
+    return environment.episodes_info
 
 
 if __name__ == "__main__":
@@ -240,10 +237,7 @@ if __name__ == "__main__":
     )
     parser.add_argument("--control_gc", action="store_true", help="Decide whether to control the GC content of the solution")
     parser.add_argument("--algorithm", type=str, default='rnafold', help="Choose a folding algorithm for predictions. Available: rnafold, e2efold, linearfold")
-    parser.add_argument("--rna_id", type=str, default='1', help="provide the rna id for writing files s.g. for contrafold")
-    parser.add_argument("--distance_metric", type=str, default='hamming', help="Choose a distance metric. Available: hamming, levenshtein, wl")
     # parser.add_argument("--structure_only", action="store_true", help="Choose if state only considers structure parts of the target")
-    parser.add_argument("--min_solutions", type=int, default=1, help="Number of optimal solutions")
 
 
     args = parser.parse_args()
@@ -271,7 +265,6 @@ if __name__ == "__main__":
         mutation_threshold=args.mutation_threshold,
         reward_exponent=args.reward_exponent,
         state_radius=args.state_radius,
-        distance_metric=get_distance_metric(args.distance_metric),
         # gc_tolerance=args.gc_tolerance,
         # desired_gc=args.desired_gc,
         # gc_improvement_step=args.gc_improvement_step,
@@ -295,7 +288,6 @@ if __name__ == "__main__":
         desired_gc=args.desired_gc,
         algorithm=args.algorithm,
         gc_tolerance=args.gc_tolerance,
-        rna_id=args.rna_id,
         # structure_only=args.structure_only,
         # training_data=args.training_data,
     )
@@ -323,5 +315,4 @@ if __name__ == "__main__":
         network_config=network_config,
         agent_config=agent_config,
         env_config=env_config,
-        num_solutions=args.min_solutions,
     )

@@ -47,9 +47,9 @@ class LibLearnaWorkerTest(Worker):
                 target_structure_ids=self.sequence_ids,
             )
             self.validation_sequences = parse_local_design_data(
-                dataset=Path(self._data_dir, "rfam_PD_validation").stem,
+                dataset=Path(self._data_dir, "validation_test").stem,
                 data_dir=self._data_dir,
-                target_structure_ids=range(1, 101),
+                target_structure_ids=range(1, 2),
             )
         else:
             self.train_sequences = parse_dot_brackets(
@@ -201,7 +201,8 @@ class LibLearnaWorkerTest(Worker):
 
         with multiprocessing.Pool(self.num_cores) as pool:
             evaluation_results = pool.starmap(design_rna, evaluation_arguments)
-
+        
+        print(evaluation_results)
         evaluation_sequence_infos = {}
         evaluation_sum_of_min_distances = 0
         evaluation_sum_of_first_distances = 0
@@ -348,7 +349,7 @@ class LibLearnaWorkerTest(Worker):
 
         config_space.add_hyperparameter(
             CS.CategoricalHyperparameter(
-                "trainingset", choices=['rfam_PD_validation']
+                "trainingset", choices=['train_test']
             )
         )
 
