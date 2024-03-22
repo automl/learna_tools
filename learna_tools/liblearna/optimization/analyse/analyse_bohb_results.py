@@ -60,12 +60,7 @@ def analyse_bohb_run(run):
     all_solved_dict = [
         {'num_solved': x.info['validation_info']['num_solved'], 'sum_of_min_distances': x.info['validation_info']["sum_of_min_distances"], 'config_id': x.config_id, 'budget': x.budget, 'start_time': x['time_stamps']['started'], 'finishing_time': x['time_stamps']['finished'], 'config': id2conf[x.config_id]['config']} for x in all_runs if x.info and int(x.info['validation_info']['num_solved']) >= min_solved
     ]
-
-    all_solved_df = pd.DataFrame(all_solved_dict)
-    
-    Path(f'processed_data/bohb/pgfplot/{run}').mkdir(parents=True, exist_ok=True)
-    write_pgf_plot_data(all_solved_df, f'processed_data/bohb/pgfplot/{run}')
-    
+        
     # we can also get the training information
     training_info = [x.info["train_info"] for x in all_runs if x.info]
     # print(training_info[:2])
@@ -92,29 +87,6 @@ def analyse_bohb_run(run):
         print(f"Sum of min distances: {i[1]}")
         # print(f"Budget: {i[3]}")
         print(f"Config: {i[4]}")
-
-def write_pgf_plot_data(df, out_dir):
-    for budget, group in df.groupby('budget'):
-        with open(f"{out_dir}/num_solved_budget_{int(budget)}.tsv", "w+") as f:
-            for i, row in group.iterrows():
-                unsolvedsolved = 100 - row['num_solved']
-                start_time = row['finishing_time']
-                f.write(f"{start_time}\t{unsolvedsolved}\n")
-                # budget = row['budget']
-        
-        with open(f"{out_dir}/sum_of_min_distances_budget_{int(budget)}.tsv", "w+") as f:
-            for i, row in group.iterrows():
-                sum_of_min_distances = row['sum_of_min_distances']
-                start_time = row['finishing_time']
-                f.write(f"{start_time}\t{sum_of_min_distances}\n")
-                # budget = row['budget']
-
-    with open(f"{out_dir}/num_solved_vs_sum_of_min_distances.tsv", "w+") as f:
-        for i, row in df.iterrows():
-            solved = row['num_solved']
-            loss = row['sum_of_min_distances']
-            f.write(f"{loss}\t{solved}\n")
-            # budget = row['budget']
 
 if __name__ == '__main__':
     import argparse

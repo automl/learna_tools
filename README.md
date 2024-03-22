@@ -79,6 +79,7 @@ The valiation and training data contains only 1 sample.
 The results of the script, including all models and configurations, will be saved to `results/bohb/<run_id>`, where the run id is defined by the first command line argument of the script (here `test_run`).
 
 The second argument defines the mode of the script (here `test`), while the third is the number of iterations that BOHB will run (here `20`).
+Feel free to adjust the parameters as needed, however, note that BOHB requires some iterations to build a model to sample configurations from.
 
 To reproduce the original meta-optimization run (NOT recommended) you can simply run
 
@@ -86,7 +87,16 @@ To reproduce the original meta-optimization run (NOT recommended) you can simply
 ./reproduce_meta_optimization.sh reproduce reproduce
 ```
 
-The script includes plotting and printing of some information about the meta-optimization after it is done.
+We include a script for plotting the results of the meta-optimization and print information about the configurations.
+If you like, you can also use a config to run libLEARNA with it.
+However, you will have to define the exact state radius parameter, which depends on the conv sizes and is tuned as a relative parameter.
+To get the state radius, you can run the following command:
+
+```
+python learna_tools/liblearna/optimization/analyse/get_state_radius.py --conv1 <conv_radius1 from configuration> --conv2 <conf_radius2 from configuration> --state_rel <statestate_radius_relative from configuration>
+```
+
+You can then use your config for running libLEARNA, while making sure that you load the correct model from the output directory of the meta-optimization by specifying the correct path via the `--restore_path` parameter (see below for more information).
 
 
 ### General usage
