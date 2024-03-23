@@ -120,7 +120,7 @@ To get the exact same plot, you can run
 python plot_1_shot.py --liblearna_directory results/liblearna_one_shot/ --metalearna_dir results/metalearna_one_shot --read_raw
 ```
 However, you can also run the experiment from scratch.
-TO rerun the experiment, use
+To rerun the experiment, use
 
 ```
 ./reproduce_one_shot_experiment.sh
