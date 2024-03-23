@@ -111,29 +111,25 @@ python learna_tools/liblearna/optimization/analyse/get_state_radius.py --conv1 <
 You can then use your config for running libLEARNA, while making sure that you load the correct model from the output directory of the meta-optimization by specifying the correct path via the `--restore_path` parameter (see below for more information).
 
 ### Reproduce Eterna100 version 2 results
-Note that both, LEARNA and libLEARNA are not using seeds. 
-Therefore, each run might slightly differ. 
-However, we observe the same performance across multiple runs for both methods when running longer evaluations (like the 1 hour benchmarks or the 24 hours for the Eterna100 evaluations)
-For the 1-shot performance, this might result in different results. 
-We therefore include the original predictions used for the paper in the repository (1-shot-predictions-raw) for both methods.
-For partial RNA design tasks, one can seed the task generation process.
 
 #### One-shot-performance
-To run the 1-shot-experiment, you can use
+We include the original predictions used for the paper to reproduce the plot for the 1-shot predictions (1-shot-predictions-raw).
+To get the exact same plot, you can run
+
+```
+python plot_1_shot.py --liblearna_directory results/liblearna_one_shot/ --metalearna_dir results/metalearna_one_shot --read_raw
+```
+However, you can also run the experiment from scratch.
+TO rerun the experiment, use
 
 ```
 ./reproduce_one_shot_experiment.sh
 ```
 
-To plot the results, use
+You can then plot the results with
 
 ```
 python plot_1_shot.py --liblearna_directory results/liblearna_one_shot/ --metalearna_dir results/metalearna_one_shot
-```
-You can reproduce the plot from the paper by reading the raw predictions from the files:
-
-```
-python plot_1_shot.py --liblearna_directory results/liblearna_one_shot/ --metalearna_dir results/metalearna_one_shot --read_raw
 ```
 
 #### Changing Objectives
