@@ -170,7 +170,7 @@ Note that libLEARNA adapts to the search space. It might take a few samples to d
 When using a desired GC content, the adaptation fast might be longer but in later stages libLEARNA will find solutions with nearly every shot.
 
 For the evaluation of the riboswitch design task we use [RnaBench](https://www.biorxiv.org/content/10.1101/2024.01.09.574794v1).
-Please fing the [repository here](https://github.com/automl/RnaBench).
+Please find the [repository here](https://github.com/automl/RnaBench).
 We mainly followed the [riboswitch design example](https://github.com/automl/RnaBench/blob/main/examples/rna_design_examples/riboswitch_design_example.py) and the [riboswitch design with properties example](https://github.com/automl/RnaBench/blob/main/examples/rna_design_examples/riboswitch_design_with_properties_example.py).
 RnaBench also reimplements the original design procedure proposed by [Wachsmuth et al.](https://academic.oup.com/nar/article/41/4/2541/2414752).
 
@@ -196,7 +196,7 @@ Then run
 cmpress Rfam.cm
 ```
 
-To design RNAs that match the Hammrhead ribozyme (Type III) family as described in our paper you can run
+After going back to the project root with `cd ..`, you can design RNAs that match the Hammrhead ribozyme (Type III) family as described in our paper with
 
 ```
 liblearna --input_file examples/cm_design.input --num_solutions 20 --cm_design --cm_path rfam_cms/Rfam.cm --cm_name RF00008 --cm_threshold 10 --min_length 50 --max_length 60
