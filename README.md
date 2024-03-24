@@ -169,6 +169,11 @@ You can add desired GC-contents with `--desired_gc <float>` and a tolerance with
 Note that libLEARNA adapts to the search space. It might take a few samples to do so. We request 100 solutions in our example, which took roughly 5 minutes in our local tests on a notebook. However, you will observe that even for this amount of solutions, libLEARNA will adapt to the space and provide later solutions much faster than the first one. Requesting 1000 or 10000 solutions, therefore, might be quite fast once libLEARNA adapted to the space.
 When using a desired GC content, the adaptation fast might be longer but in later stages libLEARNA will find solutions with nearly every shot.
 
+For the evaluation of the riboswitch design task we use [RnaBench](https://www.biorxiv.org/content/10.1101/2024.01.09.574794v1).
+Please fing the [repository here](https://github.com/automl/RnaBench).
+We mainly followed the [riboswitch design example](https://github.com/automl/RnaBench/blob/main/examples/rna_design_examples/riboswitch_design_example.py) and the [riboswitch design with properties example](https://github.com/automl/RnaBench/blob/main/examples/rna_design_examples/riboswitch_design_with_properties_example.py).
+RnaBench also reimplements the original design procedure proposed by [Wachsmuth et al.](https://academic.oup.com/nar/article/41/4/2541/2414752).
+
 ### Design of Sequences that Match the Hammerhead Ribozyme covariance model
 You can use the latest Rfam database CMs as follows
 ```
