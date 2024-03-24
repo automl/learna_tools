@@ -199,19 +199,43 @@ cmpress Rfam.cm
 After going back to the project root with `cd ..`, you can design RNAs that match the Hammrhead ribozyme (Type III) family as described in our paper with
 
 ```
-liblearna --input_file examples/cm_design.input --num_solutions 20 --cm_design --cm_path rfam_cms/Rfam.cm --cm_name RF00008 --cm_threshold 10 --min_length 50 --max_length 60
+liblearna --input_file examples/cm_design.input --num_solutions 500000 --cm_design --cm_path rfam_cms/Rfam.cm --cm_name RF00008 --cm_threshold -10000 --min_length 50 --max_length 60 --results_dir results/cm --show_all_designs
+```
+Feel free to run this multiple times to get results for multiple independent runs.
+You can adjust the `--num_solutions` parameter to have shorter runs.
+You can always run linLEARNA using a random agent with the `--agent random` option.
+We recommend to save the results into a different directory via the `--results_dir` option to use our plotting script.
+
+To plot the results, you can use the following command
+
+```
+python evaluation/analyse_cm_preds.py --results_dirs results/cm --chunk_size 500 --num_evaluations 500000
+```
+Please adjust the parameters as needed for shorter runs or different results directories.
+Note that when running different versions of libLEARNA, you probably might want to adjust the ID of the RNA in the input fiel for the search space, because the plotting script uses this ID to distinguish between runs.
+To run the plotting script using multiple results directories, you can just add the directories to the `--results_dirs` option, e.g.,
+```
+python evaluation/analyse_cm_preds.py --results_dirs results/cm1 results/cm2 --chunk_size 500 --num_evaluations 500000
 ```
 
 ### RRI Design
 To run libLEARNA for RRI design, you can use the following call
+
 ```
-liblearna --input_file examples/rri_design.input --rri_design --rri_threshold 10 --min_length 50 --max_length 60
+liblearna --input_file examples/rri_design.input --rri_design --rri_threshold -20000 --min_length 50 --max_length 60 --num_solutions 100000 --show_all_designs --results_dir results/rri
 ```
 This will use the example design space without any restrictions (unconstrained design space in our paper) with the default target mRNA.
 However, you can use a new target via the `--rri_target` option, followed by the target sequence.
 The `--rri_threshold` parameter allows to set a threshold for the reported canidates.
 We use positive numbers here, because the threshold is based on the reward of libLEARNA, however, since we are optimizing for energy, the actual threshold from our example corresponds to an energy threshold of -10.
 To run the other two search spaces use the same call but the examples `rri_design_rnafold_full_struc_partial_sec.input` and `rri_design_rnafold_full_structure.input`.
+
+To plot the results, you can use
+
+```
+python evaluation/analyse_rri_design.py --results_dir results/cm/ --chunk_size 100 --num_evaluations 100000
+```
+Again feel free to run the random agent, adjust the experiment parameters to have shorter runs or use multiple results directories.
 
 ---
 
