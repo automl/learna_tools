@@ -18,13 +18,9 @@ args = parser.parse_args()
 def process_file(file_path, chunk_size, num_evals):
     df = pd.read_pickle(file_path)
 
-    # Mapping experiment ID and seed
     df = df[:num_evals]
     experiment_id = '-'.join(file_path.stem.split('_')[:-2])
-    # print(file_path.stem, df['bitscore'].max(), df['bitscore'].min())
-    # df['bitscore'] = df['bitscore'].astype('float').replace(-200, 0.0)
 
-    # Chunking data every N steps and calculating mean and std dev
     df['chunk'] = df.index // chunk_size
     try:
         chunked = df.groupby('chunk')['reward'].agg(['mean', 'std']).reset_index()
@@ -40,16 +36,15 @@ for results_dir in args.results_dirs:
     paths += list(Path(results_dir).glob('*'))
 
     all_results = []
-    chunk_size = args.chunk_size  # Change this to your desired chunk size
+    chunk_size = args.chunk_size
     num_evals = args.num_evaluations
     for p in paths:
         print('### Processing file {} ###'.format(p))
         chunked_data = process_file(p, chunk_size, num_evals)
         all_results.append(chunked_data)
-# paths = list(Path(args.results_dir).glob('*'))
 
 all_results = []
-chunk_size = args.chunk_size  # Change this to your desired chunk size
+chunk_size = args.chunk_size
 num_evals = args.num_evaluations
 for p in paths:
     print('### Processing file {} ###'.format(p))
@@ -69,19 +64,6 @@ for exp_id in final_agg['experiment_id'].unique():
     mean_reward = exp_data['mean', 'mean']
     std_dev = exp_data['mean', 'std']
     chunks = exp_data['chunk']
-
-    # outdir = Path('cm_analysis_test')
-    # outdir.mkdir(exist_ok=True, parents=True)
-    # outpath = Path(outdir, f"{exp_id.replace(' ', '-')}_chunksize_{chunk_size}_ci.tsv")
-    
-    # with open(outpath, 'w+') as f:
-    #     f.write('time'+'\t'+'high_ci_0.05'+'\t'+'low_ci_0.05'+'\t'+'mean'+'\n')
-    #     # f.write('1e-10'+'\t'+'0.0'+'\t'+'0.0'+'\t'+'0.0'+'\n')
-    #     for i, m, s in zip(chunks, mean_reward, std_dev):
-    #         low = m-s
-    #         high = m+s
-    #         f.write(f"{i}\t{low}\t{high}\t{m}\n")
-
 
     # Plotting the mean reward
     plt.plot(chunks, mean_reward, label=f'Experiment {exp_id}')
